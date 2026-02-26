@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -19,8 +19,13 @@ export default function MilkEntryScreen({ route, navigation }) {
   const [eLiter, setELiter] = useState(entry?.evening_liter?.toString() || '');
   const [eFat, setEFat] = useState(entry?.evening_fat?.toString() || '');
 
+  // ✅ Refs for Next focus
+  const mLiterRef = useRef(null);
+  const mFatRef = useRef(null);
+  const eLiterRef = useRef(null);
+  const eFatRef = useRef(null);
+
   const handleSave = async () => {
-    // Only update if this row has a real DB ID
     if (entry?.id && !entry.id.toString().startsWith('empty')) {
       await updateMilkEntry(
         entry.id,
@@ -30,7 +35,6 @@ export default function MilkEntryScreen({ route, navigation }) {
         parseFloat(eFat) || 0
       );
     } else {
-      // Add new entry if it does not exist
       await addMilkEntry(
         customer.id,
         date,
@@ -48,20 +52,63 @@ export default function MilkEntryScreen({ route, navigation }) {
     <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
       <Text style={[styles.title, { color: theme.textColor }]}>{customer.name}</Text>
 
-      <Text style={[{ color: theme.textColor }]}>Date</Text>
-      <TextInput value={date} onChangeText={setDate} style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]} />
+      {/* Date */}
+      <Text style={{ color: theme.textColor }}>Date</Text>
+      <TextInput
+        value={date}
+        onChangeText={setDate}
+        style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]}
+        returnKeyType="next"
+        onSubmitEditing={() => mLiterRef.current?.focus()}
+      />
 
-      <Text style={[{ color: theme.textColor }]}>Morning Liter</Text>
-      <TextInput value={mLiter} onChangeText={setMLiter} style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]} keyboardType="numeric" />
+      {/* Morning Liter */}
+      <Text style={{ color: theme.textColor }}>Morning Liter</Text>
+      <TextInput
+        ref={mLiterRef}
+        value={mLiter}
+        onChangeText={setMLiter}
+        style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]}
+        keyboardType="numeric"
+        returnKeyType="next"
+        onSubmitEditing={() => mFatRef.current?.focus()}
+      />
 
-      <Text style={[{ color: theme.textColor }]}>Morning Fat</Text>
-      <TextInput value={mFat} onChangeText={setMFat} style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]} keyboardType="numeric" />
+      {/* Morning Fat */}
+      <Text style={{ color: theme.textColor }}>Morning Fat</Text>
+      <TextInput
+        ref={mFatRef}
+        value={mFat}
+        onChangeText={setMFat}
+        style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]}
+        keyboardType="numeric"
+        returnKeyType="next"
+        onSubmitEditing={() => eLiterRef.current?.focus()}
+      />
 
-      <Text style={[{ color: theme.textColor }]}>Evening Liter</Text>
-      <TextInput value={eLiter} onChangeText={setELiter} style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]} keyboardType="numeric" />
+      {/* Evening Liter */}
+      <Text style={{ color: theme.textColor }}>Evening Liter</Text>
+      <TextInput
+        ref={eLiterRef}
+        value={eLiter}
+        onChangeText={setELiter}
+        style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]}
+        keyboardType="numeric"
+        returnKeyType="next"
+        onSubmitEditing={() => eFatRef.current?.focus()}
+      />
 
-      <Text style={[{ color: theme.textColor }]}>Evening Fat</Text>
-      <TextInput value={eFat} onChangeText={setEFat} style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]} keyboardType="numeric" />
+      {/* Evening Fat */}
+      <Text style={{ color: theme.textColor }}>Evening Fat</Text>
+      <TextInput
+        ref={eFatRef}
+        value={eFat}
+        onChangeText={setEFat}
+        style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]}
+        keyboardType="numeric"
+        returnKeyType="done"
+        onSubmitEditing={handleSave}   // ✅ Press OK to Save
+      />
 
       <Button title={entry ? "Update Entry" : "Save Entry"} onPress={handleSave} />
     </View>

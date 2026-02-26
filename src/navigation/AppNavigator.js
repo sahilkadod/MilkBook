@@ -6,7 +6,7 @@ import CustomerListScreen from '../screens/customers/CustomerListScreen';
 import AddCustomerScreen from '../screens/customers/AddCustomerScreen';
 import CustomerDashboardScreen from '../screens/customers/CustomerDashboardScreen';
 import MilkEntryScreen from '../screens/milk/MilkEntryScreen';
-
+import SetRateScreen from '../screens/SetRateScreen'
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
@@ -31,6 +31,9 @@ export default function AppNavigator() {
                     component={MilkEntryScreen}
                     options={{ title: 'Add Milk Entry' }}
                 />
+                <Stack.Screen
+                    name="SetRate"
+                    component={SetRateScreen} />
             </Stack.Navigator>
         </NavigationContainer>
     );
