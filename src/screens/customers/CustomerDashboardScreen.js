@@ -99,8 +99,9 @@ export default function CustomerDashboardScreen({ route, navigation }) {
         totalLiter: 0,
         totalFat: 0,
         totalMoney: 0,
-        sessionCount: 0,
     };
+
+    let totalDaysWithData = 0;
 
     entries.forEach(item => {
         const mLit = parseFloat(item.morning_liter) || 0;
@@ -108,26 +109,35 @@ export default function CustomerDashboardScreen({ route, navigation }) {
         const eLit = parseFloat(item.evening_liter) || 0;
         const eFat = parseFloat(item.evening_fat) || 0;
 
-        if (mLit && mFat) totals.sessionCount += 1;
-        if (eLit && eFat) totals.sessionCount += 1;
+        if (mLit || eLit) totalDaysWithData++;
 
         totals.totalML += mLit;
         totals.totalMF += mFat;
+
         totals.totalEL += eLit;
         totals.totalEF += eFat;
     });
 
+    // ✅ Total Liter
     totals.totalLiter = totals.totalML + totals.totalEL;
+
+    // ✅ Total Fat
     totals.totalFat = totals.totalMF + totals.totalEF;
 
+    // ✅ Sessions = days × 2
+    const totalSessions = totalDaysWithData * 2;
+
+    // ✅ Average Fat (your method)
     const averageFat =
-        totals.sessionCount > 0
-            ? totals.totalFat / totals.sessionCount
+        totalSessions > 0
+            ? totals.totalFat / totalSessions
             : 0;
 
-    const rateValue = averageFat * currentRate;
+    // ✅ Rate per liter
+    const ratePerLiter = averageFat * currentRate;
 
-    totals.totalMoney = totals.totalLiter * rateValue;
+    // ✅ Total Money
+    totals.totalMoney = totals.totalLiter * ratePerLiter;
 
     // -------------------- FOOTER TOTAL ROW --------------------
     const renderFooter = () => (
