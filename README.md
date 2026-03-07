@@ -1,52 +1,69 @@
-React Native App (npm)
+# React Native App (npm)
 
-This is a new React Native
- project, bootstrapped using @react-native-community/cli
-.
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-React Native lets you build mobile apps using only JavaScript and React. Your code runs natively on both Android and iOS.
+---
 
-Getting Started
+## Getting Started
 
-Note: Make sure you have completed the Set Up Your Environment
- guide before proceeding.
+> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 
-# Step 1: Start Metro
+---
+
+## Step 1: Start Metro
 
 Metro is the JavaScript build tool for React Native. Start it from the root of your project:
 
+```sh
 npm start
-# Step 2: Build and Run Your App
+```
+
+---
+
+## Step 2: Build and Run Your App
 
 With Metro running, open a new terminal window/pane and run:
 
 Android (Debug)
+```sh
 npm run android
+```
 Android (Release)
+```sh
 npm run android-release
+```
 iOS (macOS only)
 
 Before running on iOS, install CocoaPods dependencies:
-
+```sh
 bundle install
 bundle exec pod install
+```
+Then run:
+```sh
 npm run ios
+```
 
-# Step 3: Build APK (Android)
+---
 
-Debug APK:
+## Step 3: Build APK (Android)
+
+### Debug APK:
 ```sh
 npm run build-debug
 ```
-
-Release APK:
+### Release APK:
 ```sh
 npm run build-release
 ```
-Release APK path:
+### Release APK path:
+```sh
 android/app/build/outputs/apk/release/app-release.apk
+```
 
-# Step 4: Install APK on Device
+---
+
+## Step 4: Install APK on Device
 
 Debug:
 ```sh
@@ -57,23 +74,30 @@ Release:
 npm run install-release
 ```
 
-# Step 5: Clean Project
+---
+
+## Step 5: Clean Project
 
 If your app shows old code or changes are not reflected:
 ```sh
 npm run clean
 ```
-# Step 6: Modify Your App
+
+---
+
+## Step 6: Modify Your App
 
 Open App.tsx (or your entry component) in your text editor and make changes. Fast Refresh will automatically update your app.
 
-## To force a full reload:
+To force a full reload:
 
-### Android: Press R twice or use Dev Menu (Ctrl + M or Cmd ⌘ + M)
+Android: Press <kbd>R</kbd> twice or use Dev Menu (<kbd>Ctrl</kbd> + <kbd>M</kbd> or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd>)
 
-### iOS: Press R in the simulator
+iOS: Press <kbd>R</kbd> in the simulator
 
-# Step 7: Install Navigation Dependencies
+---
+
+## Step 7: Install Navigation Dependencies
 ```sh
 npm install @react-navigation/native
 npm install @react-navigation/native-stack
@@ -81,12 +105,17 @@ npm install @react-navigation/bottom-tabs
 npm install react-native-screens react-native-safe-area-context
 ```
 
-# Step 8: Lint & Test
+---
+
+## Step 8: Lint & Test
 ```sh
 npm run lint
 npm run test
 ```
-# Step 9: Troubleshooting
+
+---
+
+## Step 9: Troubleshooting
 
 Old app still running: Run npm run clean and uninstall old app from device/emulator.
 
@@ -96,10 +125,13 @@ Build fails: Check android/build.gradle for correct buildToolsVersion, compileSd
 
 Dependencies missing: Run npm install (and bundle exec pod install for iOS).
 
-# Step 10: Scripts (package.json)
+---
+
+## Step 10: Scripts (package.json)
 
 Add these scripts to your package.json for easy npm commands:
-```sh
+
+```json
 "scripts": {
     "android": "react-native run-android",
     "android-release": "cd android && ./gradlew assembleRelease && cd ..",
@@ -114,3 +146,13 @@ Add these scripts to your package.json for easy npm commands:
     "clean": "cd android && ./gradlew clean && cd .."
 }
 ```
+
+---
+
+## Learn More
+
+- [React Native Website](https://reactnative.dev) – Learn more about React Native
+- [Getting Started](https://reactnative.dev/docs/environment-setup) – Overview of React Native and environment setup
+- [Learn the Basics](https://reactnative.dev/docs/getting-started) – Guided tour of React Native basics
+- [Blog](https://reactnative.dev/blog) – Latest official React Native posts
+- [`@facebook/react-native`](https://github.com/facebook/react-native) – Open Source GitHub repository
