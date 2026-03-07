@@ -85,8 +85,8 @@ android {
     applicationId "com.milkbook"
     minSdkVersion rootProject.ext.minSdkVersion
     targetSdkVersion rootProject.ext.targetSdkVersion
-    versionCode 2        // increment this for every release
-    versionName "1.1"    // new version string
+    versionCode 3       // increment this for every release
+    versionName "1.0.0"    // new version string
 }
     signingConfigs {
         debug {
