@@ -2,18 +2,18 @@
   "name": "MilkBook",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "android": "react-native run-android",
-    "android-release": "cd android && ./gradlew assembleRelease && cd ..",
-    "build-debug": "cd android && ./gradlew assembleDebug && cd ..",
-    "build-release": "cd android && ./gradlew assembleRelease && cd ..",
-    "install-debug": "cd android && ./gradlew installDebug && cd ..",
-    "install-release": "cd android && ./gradlew installRelease && cd ..",
-    "ios": "react-native run-ios",
-    "lint": "eslint .",
-    "start": "react-native start",
-    "test": "jest",
-    "clean": "cd android && ./gradlew clean && cd .."
+"scripts": {
+  "android": "react-native run-android",
+  "android-release": "cd android && gradlew.bat assembleRelease && cd ..",
+  "build-debug": "cd android && gradlew.bat assembleDebug && cd ..",
+  "build-release": "cd android && gradlew.bat assembleRelease && cd ..",
+  "install-debug": "cd android && gradlew.bat installDebug && cd ..",
+  "install-release": "cd android && gradlew.bat installRelease && cd ..",
+  "ios": "react-native run-ios",
+  "lint": "eslint .",
+  "start": "react-native start",
+  "test": "jest",
+  "clean": "cd android && gradlew.bat clean && cd .."
 },
   "dependencies": {
     "@react-native-picker/picker": "^2.11.4",

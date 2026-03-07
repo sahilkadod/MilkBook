@@ -194,7 +194,7 @@ export default function CustomerDashboardScreen({ route, navigation }) {
 
                 {/* Share Report Button */}
                 <TouchableOpacity
-                    style={[styles.addButton, { backgroundColor: '#2980b9' }]}
+                    style={[styles.addButton, { backgroundColor: '#25D366' }]}
                     onPress={shareReport}
                 >
                     <Text style={styles.addButtonText}>Share Report</Text>
@@ -249,7 +249,7 @@ export default function CustomerDashboardScreen({ route, navigation }) {
 
 const styles = StyleSheet.create({
     headerContainer: { padding: 15 },
-    customerName: { fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginBottom: 15, backgroundColor: '#3498db', padding: 10, borderRadius: 8 },
+    customerName: { fontSize: 22, fontWeight: 'bold', textAlign: 'center', marginBottom: 15, padding: 10, borderRadius: 8 },
     filterCard: { flexDirection: 'row', borderRadius: 10, marginBottom: 15, paddingHorizontal: 5 },
     picker: { flex: 1 },
     rateCard: { flexDirection: 'row', alignItems: 'center', marginBottom: 15 },
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     rateInput: { borderWidth: 1, borderRadius: 8, paddingHorizontal: 10, height: 40, flex: 1, marginRight: 8 },
     saveButton: { backgroundColor: '#2E86DE', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8 },
     saveButtonText: { color: '#fff', fontWeight: '600' },
-    addButton: { backgroundColor: '#27ae60', paddingVertical: 12, borderRadius: 10, alignItems: 'center', marginBottom: 15 },
+    addButton: { backgroundColor: '#2E86DE', paddingVertical: 12, borderRadius: 10, alignItems: 'center', marginBottom: 15 },
     addButtonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
     summaryCard: { borderRadius: 10, padding: 10, marginBottom: 15 },
     summaryText: { fontSize: 13, marginVertical: 2 },
@@ -266,6 +266,6 @@ const styles = StyleSheet.create({
     row: { flexDirection: 'row', paddingVertical: 12, borderBottomWidth: 0.5, paddingHorizontal: 10 },
     headerDate: { width: 45, fontWeight: 'bold' },
     headerCell: { flex: 1, textAlign: 'center', fontWeight: 'bold', fontSize: 12 },
-    cellDate: { width: 45, fontSize: 13, fontWeight: 'bold' },
+    cellDate: { textAlign: 'center', width: 45, fontSize: 13, fontWeight: 'bold' },
     cell: { flex: 1, textAlign: 'center', fontSize: 13, fontWeight: '500' },
 });

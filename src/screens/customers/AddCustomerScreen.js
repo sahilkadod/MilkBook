@@ -19,7 +19,7 @@ export default function AddCustomerScreen({ navigation }) {
     return (
         <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
 
-            <View style={styles.card}>
+            <View style={[styles.card,{backgroundColor:theme.backgroundColor}]}>
                 <TextInput
                     placeholder="Customer Name"
                     placeholderTextColor="#999"
@@ -27,7 +27,7 @@ export default function AddCustomerScreen({ navigation }) {
                     onChangeText={setName}
                     style={[
                         styles.input,
-                        { color: theme.textColorblack, borderColor: theme.borderlineColor }
+                        { color: theme.textColor, borderColor: theme.borderlineColor }
                     ]}
                 />
 
@@ -38,7 +38,7 @@ export default function AddCustomerScreen({ navigation }) {
                     onChangeText={setPhone}
                     style={[
                         styles.input,
-                        { color: theme.textColorblack, borderColor: theme.borderlineColor }
+                        { color: theme.textColor, borderColor: theme.borderlineColor }
                     ]}
                     keyboardType="numeric"
                 />
@@ -50,7 +50,7 @@ export default function AddCustomerScreen({ navigation }) {
                     onChangeText={setAddress}
                     style={[
                         styles.input,
-                        { color: theme.textColorblack, borderColor: theme.borderlineColor }
+                        { color: theme.textColor, borderColor: theme.borderlineColor }
                     ]}
                 />
 
@@ -70,8 +70,7 @@ const styles = StyleSheet.create({
     },
 
     card: {
-        backgroundColor: '#f8f8f8',
-        padding: 20,
+        padding: 10,
         borderRadius: 12,
         elevation: 2,
     },

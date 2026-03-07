@@ -49,7 +49,7 @@ export default function CustomerListScreen({ navigation }) {
                             styles.card,
                             {
                                 borderColor: theme.borderlineColor,
-                                backgroundColor: theme.cardBackground || '#f9f9f9'
+                                backgroundColor: theme.borderlineColor,
                             }
                         ]}
                         activeOpacity={0.7}
@@ -57,7 +57,7 @@ export default function CustomerListScreen({ navigation }) {
                             navigation.navigate('CustomerDashboard', { customer: item })
                         }
                     >
-                        <View style={styles.row}>
+                        <View style={[styles.row]}>
                             <View>
                                 <Text
                                     style={[styles.name, { color: theme.textColorblack }]}
