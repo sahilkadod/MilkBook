@@ -2,6 +2,9 @@ apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
+project.ext.react = [
+    excludedNativeModules: ["react-native-html-to-pdf"]
+]
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -78,13 +81,13 @@ android {
     compileSdk rootProject.ext.compileSdkVersion
 
     namespace "com.milkbook"
-    defaultConfig {
-        applicationId "com.milkbook"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
-    }
+   defaultConfig {
+    applicationId "com.milkbook"
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionCode 2        // increment this for every release
+    versionName "1.1"    // new version string
+}
     signingConfigs {
         debug {
             storeFile file('debug.keystore')

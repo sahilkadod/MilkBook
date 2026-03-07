@@ -1,36 +1,40 @@
-import React, { useEffect, useContext } from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
+import 'react-native-gesture-handler';
+import React, { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { requestStoragePermission } from './src/utils/permissions';
+
 import AppNavigator from './src/navigation/AppNavigator';
 import { createTables } from './src/database/db';
-import { ThemeProvider, ThemeContext } from './src/theme/ThemeContext';
+import { ThemeProvider } from './src/theme/ThemeContext';
 
+// -------------------- INITIALIZATION FUNCTION --------------------
+const initializeApp = async () => {
+  try {
+    await createTables(); // Only database setup
+  } catch (err) {
+    console.error('App initialization error:', err);
+  }
+};
+
+// -------------------- MAIN APP COMPONENT --------------------
 export default function App() {
   useEffect(() => {
-    createTables();
+    initializeApp();
+    requestStoragePermission();
   }, []);
 
   return (
-    <ThemeProvider>
-      <AppWithTheme />
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider>
+        <SafeAreaProvider>
+          <SafeAreaView style={{ flex: 1 }}>
+            <StatusBar barStyle="dark-content" />
+            <AppNavigator />
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
-
-function AppWithTheme() {
-  const { theme } = useContext(ThemeContext);
-
-  return (
-    <SafeAreaProvider>
-      <StatusBar
-        barStyle={theme.textColor === '#ffffff' ? 'light-content' : 'dark-content'}
-        backgroundColor={theme.primaryColor}
-      />
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.primaryColor }]}>
-        <AppNavigator />
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
-}
-
-const styles = StyleSheet.create({ container: { flex: 1 } });
