@@ -1,3 +1,39 @@
+# Milk Record App
+
+## Overview
+
+Milk Record App is a simple and free application designed for people working in the milk industry. It helps users record and manage daily milk collection data easily.
+
+The application allows users to store milk records twice a day (morning and evening), including milk quantity in liters and fat percentage. The system also calculates daily records and provides monthly summaries.
+
+## Features
+
+* Record morning and evening milk data
+* Store milk quantity in liters
+* Record milk fat percentage
+* Automatic daily and monthly calculations
+* Simple and easy-to-use interface
+
+## Purpose
+
+This application was created to help community members in the milk industry maintain accurate milk records and reduce manual calculations.
+
+## Usage
+
+This application is provided **free for community use**. Users can use the app to manage their milk records easily.
+
+## Ownership
+
+This project is maintained and controlled by the project owner. The source code, updates, and future development are managed by the owner.
+
+Unauthorized redistribution, modification, or commercial use is not allowed without permission from the owner.
+
+## Contact
+
+For suggestions or support, please contact the project owner.
+
+---
+
 # React Native App (npm)
 
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
