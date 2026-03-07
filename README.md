@@ -74,15 +74,18 @@ Open App.tsx (or your entry component) in your text editor and make changes. Fas
 ### iOS: Press R in the simulator
 
 # Step 7: Install Navigation Dependencies
+```sh
 npm install @react-navigation/native
 npm install @react-navigation/native-stack
 npm install @react-navigation/bottom-tabs
 npm install react-native-screens react-native-safe-area-context
+```
 
 # Step 8: Lint & Test
+```sh
 npm run lint
 npm run test
-
+```
 # Step 9: Troubleshooting
 
 Old app still running: Run npm run clean and uninstall old app from device/emulator.
@@ -111,23 +114,3 @@ Add these scripts to your package.json for easy npm commands:
     "clean": "cd android && ./gradlew clean && cd .."
 }
 ```
-# Step 11: Modify & Explore
-
-Open App.tsx or any other component and start customizing. Changes will hot reload automatically via Fast Refresh.
-
-# Step 12: Learn More
-
-## React Native Website
- – Learn more about React Native
-
-## Getting Started
- – Overview of React Native and environment setup
-
-## Learn the Basics
- – Guided tour of React Native basics
-
-## Blog
- – Latest official React Native posts
-
-## @facebook/react-native
- – Open Source GitHub repository
