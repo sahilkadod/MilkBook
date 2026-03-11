@@ -6,6 +6,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import CustomerListScreen from '../screens/customers/CustomerListScreen';
 import AddCustomerScreen from '../screens/customers/AddCustomerScreen';
+import UpdateCustomerScreen from '../screens/customers/UpdateCustomerScreen';
 import CustomerDashboardScreen from '../screens/customers/CustomerDashboardScreen';
 import MilkEntryScreen from '../screens/milk/MilkEntryScreen';
 import SetRateScreen from '../screens/SetRateScreen';
@@ -57,6 +58,11 @@ function HomeStack({ navigation: drawerNavigation }) {
         name="AddCustomer"
         component={AddCustomerScreen}
         options={{ title: 'Add Customer' }}
+      />
+      <Stack.Screen
+        name="UpdateCustomer"
+        component={UpdateCustomerScreen}
+        options={{ title: 'Update Customer' }}
       />
       <Stack.Screen
         name="CustomerDashboard"

@@ -3,22 +3,48 @@ import {
     View,
     Text,
     FlatList,
-    Button,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { getCustomers } from '../../database/customerService';
-import { getMonthlySummaryByCustomer } from '../../database/milkService';
+import { getCustomers, deleteCustomerFromDB } from '../../database/customerService';
 import { ThemeContext } from '../../theme/ThemeContext';
+import { Menu, Provider } from 'react-native-paper';
 
 export default function CustomerListScreen({ navigation }) {
     const { theme } = useContext(ThemeContext);
     const [customers, setCustomers] = useState([]);
 
+    // Menu state
+    const [menuVisible, setMenuVisible] = useState(false);
+    const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+    const [selectedCustomer, setSelectedCustomer] = useState(null);
+
     const loadCustomers = async () => {
         const data = await getCustomers();
         setCustomers(data);
+    };
+
+    const deleteCustomer = (customerId, customerName) => {
+        Alert.alert(
+            'Delete Customer',
+            `Are you sure you want to delete "${customerName}"?`,
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel'
+                },
+                {
+                    text: 'Delete User',
+                    style: 'destructive', // This makes the text red
+                    onPress: () => {
+                        deleteCustomerFromDB(customerId);
+                        setCustomers(prev => prev.filter(c => c.id !== customerId));
+                    },
+                },
+            ]
+        );
     };
 
     useFocusEffect(
@@ -28,50 +54,76 @@ export default function CustomerListScreen({ navigation }) {
     );
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
+        <Provider>
+            <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
+                {/* Add Customer Button */}
+                <TouchableOpacity
+                    style={styles.addButton}
+                    onPress={() => navigation.navigate('AddCustomer')}
+                >
+                    <Text style={styles.addButtonText}>+ Add Customer</Text>
+                </TouchableOpacity>
 
-            {/* Add Customer Button */}
-            <TouchableOpacity
-                style={styles.addButton}
-                onPress={() => navigation.navigate('AddCustomer')}
-            >
-                <Text style={styles.addButtonText}>+ Add Customer</Text>
-            </TouchableOpacity>
-
-            <FlatList
-                data={customers}
-                keyExtractor={(item) => item.id.toString()}
-                contentContainerStyle={{ paddingTop: 10 }}
-                showsVerticalScrollIndicator={false}
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={[
-                            styles.card,
-                            {
-                                borderColor: theme.borderlineColor,
-                                backgroundColor: theme.borderlineColor,
-                            }
-                        ]}
-                        activeOpacity={0.7}
-                        onPress={() =>
-                            navigation.navigate('CustomerDashboard', { customer: item })
-                        }
-                    >
-                        <View style={[styles.row]}>
-                            <View>
-                                <Text
-                                    style={[styles.name, { color: theme.textColorblack }]}
-                                >
-                                    {item.name}
-                                </Text>
+                <FlatList
+                    data={customers}
+                    keyExtractor={(item) => item.id.toString()}
+                    contentContainerStyle={{ paddingTop: 10 }}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            activeOpacity={0.7}
+                            onPress={() => navigation.navigate('CustomerDashboard', { customer: item })}
+                            onLongPress={(e) => {
+                                const { locationX, locationY } = e.nativeEvent;
+                                setMenuPosition({
+                                    x: locationX + 40,
+                                    y: locationY + 20,
+                                });
+                                setSelectedCustomer(item);
+                                setMenuVisible(true);
+                            }}
+                        >
+                            <View
+                                style={[
+                                    styles.card,
+                                    { borderColor: theme.borderlineColor, backgroundColor: theme.cardBackground },
+                                ]}
+                            >
+                                <View style={styles.row}>
+                                    <Text style={[styles.name, { color: theme.userNameColor }]}>{item.name}</Text>
+                                    <Text style={styles.arrow}>›</Text>
+                                </View>
                             </View>
+                        </TouchableOpacity>
+                    )}
+                />
 
-                            <Text style={styles.arrow}>›</Text>
-                        </View>
-                    </TouchableOpacity>
+                {/* Dynamic popup menu */}
+                {selectedCustomer && (
+                    <Menu
+                        visible={menuVisible}
+                        onDismiss={() => setMenuVisible(false)}
+                        anchor={{ x: menuPosition.x, y: menuPosition.y }}
+                    >
+                        <Menu.Item
+                            onPress={() => {
+                                navigation.navigate('UpdateCustomer', { customer: selectedCustomer });
+                                setMenuVisible(false);
+                            }}
+                            title="Edit Customer Details"
+                        />
+                        <Menu.Item
+                            onPress={() => {
+                                deleteCustomer(selectedCustomer.id, selectedCustomer.name);
+                                setMenuVisible(false);
+                            }}
+                            title="Delete Customer"
+                            titleStyle={{ color: 'red' }}
+                        />
+                    </Menu>
                 )}
-            />
-        </View>
+            </View>
+        </Provider>
     );
 }
 
@@ -117,11 +169,5 @@ const styles = StyleSheet.create({
     arrow: {
         fontSize: 20,
         color: '#999',
-    },
-
-    balance: {
-        fontWeight: 'bold',
-        fontSize: 16,
-        color: 'green',
     },
 });

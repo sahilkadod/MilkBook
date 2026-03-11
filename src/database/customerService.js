@@ -1,5 +1,6 @@
 import { getDBConnection } from './db';
 
+// Add customer
 export const addCustomer = (name, phone, address) => {
   const db = getDBConnection();
 
@@ -10,6 +11,7 @@ export const addCustomer = (name, phone, address) => {
   );
 };
 
+// Get all customers
 export const getCustomers = () => {
   const db = getDBConnection();
 
@@ -18,4 +20,24 @@ export const getCustomers = () => {
   );
 
   return result.rows._array;
+};
+
+// Delete customer
+export const deleteCustomerFromDB = (customerId) => {
+  const db = getDBConnection();
+
+  db.execute(
+    `DELETE FROM customers WHERE id = ?`,
+    [customerId]
+  );
+};
+
+// Update customer
+export const updateCustomer = (id, name, phone, address) => {
+  const db = getDBConnection();
+
+  db.execute(
+    `UPDATE customers SET name = ?, phone = ?, address = ? WHERE id = ?`,
+    [name, phone, address, id]
+  );
 };

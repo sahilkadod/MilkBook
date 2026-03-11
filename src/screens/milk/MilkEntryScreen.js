@@ -3,12 +3,15 @@ import {
   View,
   Text,
   TextInput,
-  Button,
-  StyleSheet
+  TouchableOpacity,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import { addMilkEntry, updateMilkEntry } from '../../database/milkService';
 import { ThemeContext } from '../../theme/ThemeContext';
-import { getContrastColor } from '../../theme/theme'; // <-- import contrast helper
+import { getContrastColor } from '../../theme/theme';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function MilkEntryScreen({ route, navigation }) {
 
@@ -45,30 +48,41 @@ export default function MilkEntryScreen({ route, navigation }) {
         parseFloat(eFat) || 0
       );
     }
-    navigation.goBack();
+
+    // Call refreshDashboard to reload data in CustomerDashboardScreen
+    if (route.params?.refreshDashboard) {
+      route.params.refreshDashboard(); // this will trigger loadEntries in the dashboard
+    }
+
+    navigation.goBack(); // navigate back to the dashboard
   };
 
-  // Determine proper text and border colors based on background
-  const dynamicTextColor = getContrastColor(theme.cardBackground);
-  const dynamicBorderColor = getContrastColor(theme.cardBackground);
+  // ---------------- Dynamic Colors ----------------
+  const inputBackgroundColor = theme.cardBackground;
+  const inputTextColor = getContrastColor(inputBackgroundColor);
+  const inputBorderColor = theme.borderlineColor || inputTextColor;
+
+  const buttonTextColor = getContrastColor(theme.secondaryColor);
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
-      
+    <KeyboardAvoidingView
+      style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       {/* Customer Name */}
-      <Text style={[styles.title, { color: getContrastColor(theme.primaryColor), backgroundColor: theme.primaryColor }]}>
+      <Text style={[styles.title, { color: getContrastColor(theme.primaryColor) }]}>
         {customer.name}
       </Text>
 
-      <View style={[styles.card, { backgroundColor: theme.cardBackground }]}>
+      <View style={[styles.card, { backgroundColor: theme.cardBackground, shadowColor: '#000' }]}>
 
         {/* Date */}
         <View style={styles.field}>
-          <Text style={[styles.label, { color: dynamicTextColor }]}>Date</Text>
+          <Text style={[styles.label, { color: inputTextColor }]}>Date</Text>
           <TextInput
             value={date}
             onChangeText={setDate}
-            style={[styles.input, { color: dynamicTextColor, borderColor: dynamicBorderColor }]}
+            style={[styles.input, { color: inputTextColor, backgroundColor: inputBackgroundColor, borderColor: inputBorderColor }]}
             returnKeyType="next"
             onSubmitEditing={() => mLiterRef.current?.focus()}
           />
@@ -77,26 +91,28 @@ export default function MilkEntryScreen({ route, navigation }) {
         {/* Morning Row */}
         <View style={styles.row}>
           <View style={styles.halfField}>
-            <Text style={[styles.label, { color: dynamicTextColor }]}>Morning Liter</Text>
+            <Text style={[styles.label, { color: inputTextColor }]}>Morning Liter</Text>
             <TextInput
               ref={mLiterRef}
               value={mLiter}
               onChangeText={setMLiter}
-              style={[styles.input, { color: dynamicTextColor, borderColor: dynamicBorderColor }]}
-              keyboardType="numeric"
+              style={[styles.input, { color: inputTextColor, backgroundColor: inputBackgroundColor, borderColor: inputBorderColor }]}
+              keyboardType="decimal-pad"
               returnKeyType="next"
+              blurOnSubmit={false}
               onSubmitEditing={() => mFatRef.current?.focus()}
             />
           </View>
           <View style={styles.halfField}>
-            <Text style={[styles.label, { color: dynamicTextColor }]}>Morning Fat</Text>
+            <Text style={[styles.label, { color: inputTextColor }]}>Morning Fat</Text>
             <TextInput
               ref={mFatRef}
               value={mFat}
               onChangeText={setMFat}
-              style={[styles.input, { color: dynamicTextColor, borderColor: dynamicBorderColor }]}
-              keyboardType="numeric"
+              style={[styles.input, { color: inputTextColor, backgroundColor: inputBackgroundColor, borderColor: inputBorderColor }]}
+              keyboardType="decimal-pad"
               returnKeyType="next"
+              blurOnSubmit={false}
               onSubmitEditing={() => eLiterRef.current?.focus()}
             />
           </View>
@@ -105,52 +121,71 @@ export default function MilkEntryScreen({ route, navigation }) {
         {/* Evening Row */}
         <View style={styles.row}>
           <View style={styles.halfField}>
-            <Text style={[styles.label, { color: dynamicTextColor }]}>Evening Liter</Text>
+            <Text style={[styles.label, { color: inputTextColor }]}>Evening Liter</Text>
             <TextInput
               ref={eLiterRef}
               value={eLiter}
               onChangeText={setELiter}
-              style={[styles.input, { color: dynamicTextColor, borderColor: dynamicBorderColor }]}
-              keyboardType="numeric"
+              style={[styles.input, { color: inputTextColor, backgroundColor: inputBackgroundColor, borderColor: inputBorderColor }]}
+              keyboardType="decimal-pad"
               returnKeyType="next"
+              blurOnSubmit={false}
               onSubmitEditing={() => eFatRef.current?.focus()}
             />
           </View>
           <View style={styles.halfField}>
-            <Text style={[styles.label, { color: dynamicTextColor }]}>Evening Fat</Text>
+            <Text style={[styles.label, { color: inputTextColor }]}>Evening Fat</Text>
             <TextInput
               ref={eFatRef}
               value={eFat}
               onChangeText={setEFat}
-              style={[styles.input, { color: dynamicTextColor, borderColor: dynamicBorderColor }]}
-              keyboardType="numeric"
+              style={[styles.input, { color: inputTextColor, backgroundColor: inputBackgroundColor, borderColor: inputBorderColor }]}
+              keyboardType="decimal-pad"
               returnKeyType="done"
               onSubmitEditing={handleSave}
             />
           </View>
         </View>
 
-        <View style={styles.buttonWrapper}>
-          <Button
-            title={entry ? "Update Entry" : "Save Entry"}
-            onPress={handleSave}
-            color={theme.secondaryColor}
-          />
-        </View>
+        {/* Save Button */}
+        <TouchableOpacity
+          style={[styles.saveButton, { backgroundColor: theme.secondaryColor }]}
+          onPress={handleSave}
+        >
+          <Icon name="save" size={20} color={buttonTextColor} style={{ marginRight: 6 }} />
+          <Text style={[styles.saveButtonText, { color: buttonTextColor }]}>
+            {entry ? "Update Entry" : "Save Entry"}
+          </Text>
+        </TouchableOpacity>
 
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 20, padding: 10, borderRadius: 8 },
-  card: { padding: 15, borderRadius: 12, elevation: 2 },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    padding: 12,
+    borderRadius: 10
+  },
+  card: {
+    padding: 20,
+    borderRadius: 15,
+    elevation: 4,
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5
+  },
   field: { marginBottom: 15 },
   row: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 },
   halfField: { flex: 0.48 },
-  label: { fontSize: 14, marginBottom: 5, fontWeight: '600' },
-  input: { borderWidth: 1, borderRadius: 8, paddingHorizontal: 10, height: 45 },
-  buttonWrapper: { marginTop: 10 },
+  label: { fontSize: 14, marginBottom: 6, fontWeight: '600' },
+  input: { borderWidth: 1, borderRadius: 10, paddingHorizontal: 12, height: 45 },
+  saveButton: { marginTop: 10, paddingVertical: 14, borderRadius: 12, alignItems: 'center' },
+  saveButtonText: { fontWeight: '700', fontSize: 16 }
 });

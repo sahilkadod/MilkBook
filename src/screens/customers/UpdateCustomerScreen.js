@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native';
-import { addCustomer, updateCustomer } from '../../database/customerService';
+import { updateCustomer } from '../../database/customerService';
 import { ThemeContext } from '../../theme/ThemeContext';
 
-export default function AddCustomerScreen({ navigation, route }) {
+export default function UpdateCustomerScreen({ navigation, route }) {
     const { theme } = useContext(ThemeContext);
-    const customer = route.params?.customer; // existing customer for edit
+    const customer = route.params?.customer;
 
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
@@ -19,27 +19,26 @@ export default function AddCustomerScreen({ navigation, route }) {
         }
     }, [customer]);
 
-    const handleSave = async () => {
+    const handleUpdate = async () => {
         if (!name) return;
 
-        if (customer) {
-            await updateCustomer(customer.id, name, phone, address);
-        } else {
-            await addCustomer(name, phone, address);
-        }
-
+        await updateCustomer(customer.id, name, phone, address);
         navigation.goBack();
     };
 
     return (
         <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
-            <View style={[styles.card, { backgroundColor: theme.backgroundColor }]}>
+            <View style={[styles.card, { backgroundColor: theme.cardBackground }]}>
+
                 <TextInput
                     placeholder="Customer Name"
                     placeholderTextColor="#999"
                     value={name}
                     onChangeText={setName}
-                    style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]}
+                    style={[
+                        styles.input,
+                        { color: theme.textColor, borderColor: theme.borderlineColor }
+                    ]}
                 />
 
                 <TextInput
@@ -47,8 +46,11 @@ export default function AddCustomerScreen({ navigation, route }) {
                     placeholderTextColor="#999"
                     value={phone}
                     onChangeText={setPhone}
-                    style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]}
                     keyboardType="numeric"
+                    style={[
+                        styles.input,
+                        { color: theme.textColor, borderColor: theme.borderlineColor }
+                    ]}
                 />
 
                 <TextInput
@@ -56,14 +58,16 @@ export default function AddCustomerScreen({ navigation, route }) {
                     placeholderTextColor="#999"
                     value={address}
                     onChangeText={setAddress}
-                    style={[styles.input, { color: theme.textColor, borderColor: theme.borderlineColor }]}
+                    style={[
+                        styles.input,
+                        { color: theme.textColor, borderColor: theme.borderlineColor }
+                    ]}
                 />
 
-                <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-                    <Text style={styles.saveButtonText}>
-                        {customer ? 'Update Customer' : 'Save Customer'}
-                    </Text>
+                <TouchableOpacity style={styles.saveButton} onPress={handleUpdate}>
+                    <Text style={styles.saveButtonText}>Update Customer</Text>
                 </TouchableOpacity>
+
             </View>
         </View>
     );
@@ -73,7 +77,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        justifyContent: 'flex-start',
     },
 
     card: {
