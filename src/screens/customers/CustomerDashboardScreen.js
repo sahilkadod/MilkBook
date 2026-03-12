@@ -10,7 +10,9 @@ import { getLatestRate, setLatestRate } from '../../database/rateService';
 import { ThemeContext } from '../../theme/ThemeContext';
 import { getContrastColor } from '../../theme/theme';
 import { Picker } from '@react-native-picker/picker';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // For react-native-vector-icons
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
 
 export default function CustomerDashboardScreen({ route, navigation }) {
     const { theme } = useContext(ThemeContext);
@@ -177,16 +179,16 @@ export default function CustomerDashboardScreen({ route, navigation }) {
                     style={styles.addButton}
                     onPress={() => navigation.navigate('MilkEntry', { customer })}
                 >
-                    <Icon name="add" size={20} color="#fff" style={{ marginRight: 8 }} />
-                    <Text style={styles.addButtonText}>Add Milk Entry</Text>
+                    <IonIcon name="add-circle-outline" size={22} color="#fff" />
+                    <Text style={styles.addButtonText}> Add Milk Entry</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={[styles.addButton, { backgroundColor: '#25D366' }]}
                     onPress={shareReport}
                 >
-                    <Icon name="share" size={20} color="#fff" style={{ marginRight: 8 }} />
-                    <Text style={styles.addButtonText}>Share Report</Text>
+                    <IonIcon name="share-social-outline" size={22} color="#fff" />
+                    <Text style={styles.addButtonText}> Share Report</Text>
                 </TouchableOpacity>
             </View>
 
@@ -220,70 +222,139 @@ export default function CustomerDashboardScreen({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-    customerName: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginBottom: 10, padding: 8, borderRadius: 6 },
-    filterCard: { flexDirection: 'row', borderRadius: 8, marginBottom: 10 },
-    picker: { flex: 1 },
-    rateCard: { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
-    rateLabel: { fontSize: 14, marginRight: 6, fontWeight: '600' },
-    rateInput: { borderWidth: 1, borderRadius: 6, paddingHorizontal: 8, height: 36, flex: 1, marginRight: 6 },
-    saveButton: { backgroundColor: '#2E86DE', paddingHorizontal: 10, paddingVertical: 6, borderRadius: 6 },
-    saveButtonText: { color: '#fff', fontWeight: '600' },
-    addButton: { backgroundColor: '#2E86DE', paddingVertical: 10, borderRadius: 8, alignItems: 'center', marginBottom: 8 },
-    addButtonText: { color: '#fff', fontSize: 14, fontWeight: '600' },
-    summaryCard: { borderRadius: 8, padding: 8, marginBottom: 10, borderWidth: 1 },
-    summaryText: { fontSize: 12, marginVertical: 1 },
-    summaryTextBold: { fontSize: 13, fontWeight: 'bold', marginTop: 2 },
-    tableHeader: { flexDirection: 'row', paddingVertical: 6, borderRadius: 6, paddingHorizontal: 5, borderWidth: 1 },
-    row: { flexDirection: 'row', paddingVertical: 6, borderBottomWidth: 0.5, paddingHorizontal: 5 },
-    cellDate: { width: 45, textAlign: 'center', fontSize: 12, fontWeight: 'bold', borderRightWidth: 1, borderColor: '#ccc' },
-    cell: { flex: 1, textAlign: 'center', fontSize: 12, fontWeight: '500', borderRightWidth: 1, borderColor: '#ccc' },
+    customerName: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 10,
+        padding: 8,
+        borderRadius: 6
+    },
+
+    filterCard: {
+        flexDirection: 'row',
+        borderRadius: 8,
+        marginBottom: 10
+    },
+
+    picker: {
+        flex: 1
+    },
+
+    rateCard: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10
+    },
+
+    rateLabel: {
+        fontSize: 14,
+        marginRight: 6,
+        fontWeight: '600'
+    },
+
+    rateInput: {
+        borderWidth: 1,
+        borderRadius: 6,
+        paddingHorizontal: 8,
+        height: 36,
+        flex: 1,
+        marginRight: 6
+    },
+
+    saveButton: {
+        backgroundColor: '#2E86DE',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 6
+    },
+
+    saveButtonText: {
+        color: '#fff',
+        fontWeight: '600'
+    },
+
+    addButton: {
+        backgroundColor: '#2E86DE',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderRadius: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 8
+    },
+
+    addButtonText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: '600'
+    },
+
+    summaryCard: {
+        borderRadius: 8,
+        padding: 8,
+        marginBottom: 10,
+        borderWidth: 1
+    },
+
+    summaryText: {
+        fontSize: 12,
+        marginVertical: 2
+    },
+
+    summaryTextBold: {
+        fontSize: 13,
+        fontWeight: 'bold',
+        marginTop: 4
+    },
+
+    tableHeader: {
+        flexDirection: 'row',
+        paddingVertical: 6,
+        borderBottomWidth: 1,
+        borderColor: '#aaa',
+        alignItems: 'center',
+        paddingHorizontal: 5
+    },
+
     headerDate: {
-        width: 40,
+        width: 45,
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 13
     },
+
     headerCell: {
         flex: 1,
         fontWeight: 'bold',
         textAlign: 'center',
         fontSize: 13
     },
-    cellDate: {
-        width: 40,
-        textAlign: 'center',
-        fontSize: 12,
-        fontWeight: 'bold',
-        paddingVertical: 4
-    },
-    cell: {
-        flex: 1,
-        textAlign: 'center',
-        fontSize: 12,
-        paddingVertical: 4
-    },
+
     row: {
         flexDirection: 'row',
         paddingVertical: 6,
         borderBottomWidth: 0.5,
         borderColor: '#ccc',
-        alignItems: 'center'
-    },
-    tableHeader: {
-        flexDirection: 'row',
-        paddingVertical: 6,
-        borderBottomWidth: 1,
-        borderColor: '#aaa',
-        backgroundColor: '#f5f5f5',
-        alignItems: 'center'
-    },
-    addButton: {
-        backgroundColor: '#2E86DE',
-        paddingVertical: 10,
-        paddingHorizontal: 15, // Added some padding for better spacing
-        borderRadius: 8,
         alignItems: 'center',
-        flexDirection: 'row',  // Added this to align text and icon in one line
-        marginBottom: 8
+        paddingHorizontal: 5
     },
+
+    cellDate: {
+        width: 45,
+        textAlign: 'center',
+        fontSize: 12,
+        fontWeight: 'bold',
+        // borderRightWidth: 1,
+        borderColor: '#ddd'
+    },
+
+    cell: {
+        flex: 1,
+        textAlign: 'center',
+        fontSize: 12,
+        // borderRightWidth: 1,
+        borderColor: '#ddd'
+    }
 });

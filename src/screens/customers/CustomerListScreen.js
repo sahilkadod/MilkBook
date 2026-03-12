@@ -6,11 +6,15 @@ import {
     StyleSheet,
     TouchableOpacity,
     Alert,
+    Button,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { getCustomers, deleteCustomerFromDB } from '../../database/customerService';
 import { ThemeContext } from '../../theme/ThemeContext';
 import { Menu, Provider } from 'react-native-paper';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+
 
 export default function CustomerListScreen({ navigation }) {
     const { theme } = useContext(ThemeContext);
@@ -36,7 +40,7 @@ export default function CustomerListScreen({ navigation }) {
                     style: 'cancel'
                 },
                 {
-                    text: 'Delete User',
+                    text: 'Delete',
                     style: 'destructive', // This makes the text red
                     onPress: () => {
                         deleteCustomerFromDB(customerId);
@@ -61,7 +65,8 @@ export default function CustomerListScreen({ navigation }) {
                     style={styles.addButton}
                     onPress={() => navigation.navigate('AddCustomer')}
                 >
-                    <Text style={styles.addButtonText}>+ Add Customer</Text>
+                    <MaterialIcon name="person-add" size={20} color="#fff" style={{ marginRight: 6 }} />
+                    <Text style={styles.addButtonText}>Add Customer</Text>
                 </TouchableOpacity>
 
                 <FlatList
@@ -106,13 +111,16 @@ export default function CustomerListScreen({ navigation }) {
                         anchor={{ x: menuPosition.x, y: menuPosition.y }}
                     >
                         <Menu.Item
+                            leadingIcon="account-edit"
                             onPress={() => {
                                 navigation.navigate('UpdateCustomer', { customer: selectedCustomer });
                                 setMenuVisible(false);
                             }}
                             title="Edit Customer Details"
                         />
+
                         <Menu.Item
+                            leadingIcon="delete"
                             onPress={() => {
                                 deleteCustomer(selectedCustomer.id, selectedCustomer.name);
                                 setMenuVisible(false);
@@ -134,17 +142,17 @@ const styles = StyleSheet.create({
     },
 
     addButton: {
-        backgroundColor: '#2E86DE',
-        paddingVertical: 12,
-        borderRadius: 10,
+        flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 15,
+        justifyContent: 'center',
+        backgroundColor: '#1976D2',
+        padding: 12,
+        borderRadius: 6,
     },
 
     addButtonText: {
         color: '#fff',
         fontSize: 16,
-        fontWeight: '600',
     },
 
     card: {

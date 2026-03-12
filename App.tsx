@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import React, { useEffect } from 'react';
-import { StatusBar } from 'react-native';
+import React, { useEffect, useContext } from 'react';
+import { StatusBar, StyleSheet } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { requestStoragePermission } from './src/utils/permissions';
@@ -8,7 +8,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 
 import AppNavigator from './src/navigation/AppNavigator';
 import { createTables } from './src/database/db';
-import { ThemeProvider } from './src/theme/ThemeContext';
+import { ThemeProvider, ThemeContext } from './src/theme/ThemeContext';
 
 // -------------------- INITIALIZATION FUNCTION --------------------
 const initializeApp = async () => {
@@ -20,6 +20,20 @@ const initializeApp = async () => {
 };
 
 // -------------------- MAIN APP COMPONENT --------------------
+function AppContent() {
+  const { theme } = useContext(ThemeContext);
+
+  return (
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.backgroundColor }]}>
+      <StatusBar
+        barStyle={theme.mode === 'dark' ? 'light-content' : 'dark-content'}
+        backgroundColor={theme.backgroundColor}
+      />
+      <AppNavigator />
+    </SafeAreaView>
+  );
+}
+
 export default function App() {
   useEffect(() => {
     initializeApp();
@@ -27,17 +41,23 @@ export default function App() {
   }, []);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={styles.root}>
       <ThemeProvider>
         <SafeAreaProvider>
           <MenuProvider>
-            <SafeAreaView style={{ flex: 1 }}>
-              <StatusBar barStyle="dark-content" />
-              <AppNavigator />
-            </SafeAreaView>
+            <AppContent />
           </MenuProvider>
         </SafeAreaProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+  safeArea: {
+    flex: 1,
+  },
+});
